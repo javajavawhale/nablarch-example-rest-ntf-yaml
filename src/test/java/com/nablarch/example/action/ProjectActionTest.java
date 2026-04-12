@@ -6,9 +6,9 @@ import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectRenameForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 import nablarch.core.beans.BeanUtil;
+import com.nablarch.example.test.http.YamlRestTest;
 import nablarch.fw.web.HttpResponse;
 import nablarch.test.core.http.RestTestSupport;
-import nablarch.test.junit5.extension.http.RestTest;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -27,7 +27,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasSize;
 
-@RestTest
+@YamlRestTest
 class ProjectActionTest {
     RestTestSupport support;
 

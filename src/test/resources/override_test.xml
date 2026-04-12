@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-configuration
+        xmlns="http://tis.co.jp/nablarch/component-configuration"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration https://nablarch.github.io/schema/component-configuration.xsd">
+
+  <!-- YAML / Excel 両対応 TestDataReader -->
+  <component name="testDataParser" class="nablarch.test.core.reader.BasicTestDataParser">
+    <property name="testDataReader">
+      <component class="com.nablarch.example.test.reader.YamlReader">
+        <property name="delegate">
+          <component name="xlsReaderForPoi" class="nablarch.test.core.reader.PoiXlsReader"/>
+        </property>
+      </component>
+    </property>
+    <property name="dbInfo" ref="dbInfo"/>
+    <property name="interpreters" ref="interpreters"/>
+  </component>
+
+</component-configuration>

@@ -9,6 +9,9 @@
 
   <!-- テスティングフレームワークの設定 -->
   <import file="nablarch/test/test-data.xml"/>
+
+  <!-- YAML / Excel 両対応 TestDataReader -->
+  <import file="override_test.xml"/>
   <import file="nablarch/test/test-transaction.xml"/>
   <import file="nablarch/test/rest-request-test.xml"/>
   <import file="nablarch/core/date_test.xml"/>
