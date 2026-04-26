@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  *
  * <p>{@code nablarch.test.junit5.extension.http.RestTest} の代替。
  * {@link YamlRestTestExtension} を使用するため、物理 Excel ファイルがなくても
- * {@code .ntf.yaml} ファイルのみでセットアップが行われる。</p>
+ * {@code .yaml} ファイルのみでセットアップが行われる。</p>
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

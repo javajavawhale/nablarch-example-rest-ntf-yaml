@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * YAML テストデータに対応した {@link RestTestSupport} のサブクラス。
  *
- * <p>{@code setUpDbIfSheetExists} をオーバーライドし、対応する {@code .ntf.yaml} が
+ * <p>{@code setUpDbIfSheetExists} をオーバーライドし、対応する {@code .yaml} が
  * クラスパス上に存在する場合は物理 Excel ファイルチェック（{@code File.exists()}）を
  * バイパスして {@code setUpDb} を直接呼び出す。</p>
  *
@@ -34,7 +34,7 @@ public class YamlRestTestSupport extends RestTestSupport {
     /**
      * {@inheritDoc}
      *
-     * <p>{@code .ntf.yaml} が存在する場合、YAML ファイルを直接参照してシートの有無を確認する。
+     * <p>{@code .yaml} が存在する場合、YAML ファイルを直接参照してシートの有無を確認する。
      * これにより、親クラスの {@code getSheet()} による物理 Excel ファイル要求をバイパスする。</p>
      */
     @Override
