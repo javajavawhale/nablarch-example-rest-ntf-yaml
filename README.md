@@ -1,14 +1,17 @@
 nablarch-example-rest
 ===============
 
-Nablarchを使ったRESTfulウェブサービスのExampleです。
-
+> **このリポジトリは [nablarch/nablarch-example-rest](https://github.com/nablarch/nablarch-example-rest) のフォークです。**
+>
 > **目的:** Nablarch Testing Framework (NTF) のテストデータファイルを Excel (.xlsx/.xls) から YAML (.yaml) へ移行する PoC。
 >
 > **主な変更内容:**
-> - 全テストデータファイル (`.xlsx` / `.xls`) を `.yaml` に変換・置き換え
+> - 全テストデータファイル (`.xls` / `.xlsx`) を `.yaml` に変換・置き換え
 > - `YamlReader` を追加（NTF の `testDataParser` 経由で YAML を読み込む）
+> - `override_test.xml` で `testDataParser` をオーバーライドし、YAML / Excel 両対応に
 > - `YamlRestTestSupport` / `YamlRestTest` を追加（`RestTestSupport` ベースのテストで YAML を使えるよう拡張）
+
+Nablarchを使ったRESTfulウェブサービスのExampleです。
 
 ## 実行手順
 
