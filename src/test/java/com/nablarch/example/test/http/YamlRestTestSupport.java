@@ -13,9 +13,9 @@ import java.util.Map;
 /**
  * YAML テストデータに対応した {@link RestTestSupport} のサブクラス。
  *
- * <p>{@code setUpDbIfSheetExists} をオーバーライドし、対応する {@code .yaml} が
- * クラスパス上に存在する場合は物理 Excel ファイルチェック（{@code File.exists()}）を
- * バイパスして {@code setUpDb} を直接呼び出す。</p>
+ * <p>{@code setUpDbIfSheetExists} をオーバーライドし、対応する {@code .ntf.yaml} または {@code .yaml} が
+ * ファイルシステム上に存在する場合は物理 Excel ファイルチェック（{@code File.exists()}）を
+ * バイパスして {@code setUpDb} を直接呼び出す。{@code .ntf.yaml} を優先する。</p>
  *
  * <ul>
  *   <li>YAML に該当シートがある場合: {@code setUpDb(sheetName)} を呼び出す</li>
@@ -25,8 +25,6 @@ import java.util.Map;
  */
 public class YamlRestTestSupport extends RestTestSupport {
 
-    private static final String YAML_EXTENSION = ".yaml";
-
     public YamlRestTestSupport(Class<?> testClass) {
         super(testClass);
     }
@@ -34,14 +32,18 @@ public class YamlRestTestSupport extends RestTestSupport {
     /**
      * {@inheritDoc}
      *
-     * <p>{@code .yaml} が存在する場合、YAML ファイルを直接参照してシートの有無を確認する。
-     * これにより、親クラスの {@code getSheet()} による物理 Excel ファイル要求をバイパスする。</p>
+     * <p>{@code .ntf.yaml} または {@code .yaml} が存在する場合、YAML ファイルを直接参照してシートの有無を確認する。
+     * これにより、親クラスの {@code getSheet()} による物理 Excel ファイル要求をバイパスする。
+     * {@code .ntf.yaml} を優先する。</p>
      */
     @Override
     protected void setUpDbIfSheetExists(String sheetName) {
         String packagePath = testDescription.getTestClass().getPackage().getName().replace('.', '/');
         String className = testDescription.getTestClassSimpleName();
-        File yamlFile = new File("src/test/java/" + packagePath + "/" + className + YAML_EXTENSION);
+        String base = "src/test/java/" + packagePath + "/" + className;
+        File yamlFile = new File(base + ".ntf.yaml").exists()
+                ? new File(base + ".ntf.yaml")
+                : new File(base + ".yaml");
 
         if (!yamlFile.exists()) {
             // YAML なし → 親クラス（Excel ベース）に委譲

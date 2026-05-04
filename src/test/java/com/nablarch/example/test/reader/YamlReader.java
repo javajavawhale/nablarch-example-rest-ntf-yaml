@@ -15,19 +15,19 @@ import java.util.*;
 /**
  * YAML ファイルからテストデータを読み込む {@link TestDataReader} 実装。
  *
- * <p>対象クラスと同名の {@code .yaml} ファイルがファイルシステム上に存在する場合は
- * YAML から読み込む。存在しない場合は {@link PoiXlsReader} に処理を委譲する。</p>
+ * <p>対象クラスと同名の {@code .ntf.yaml} または {@code .yaml} ファイルがファイルシステム上に存在する場合は
+ * YAML から読み込む。{@code .ntf.yaml} を優先し、存在しない場合は {@code .yaml} を探す。
+ * どちらも存在しない場合は {@link PoiXlsReader} に処理を委譲する。</p>
  *
  * <h2>NTF の呼び出し規約</h2>
  * <ul>
  *   <li>{@code resourceName} = ソースディレクトリ相対パス（例: {@code src/test/java/com/example}）</li>
  *   <li>{@code dataName} = {@code ClassName/sheetName}（例: {@code FooTest/setUpDb}）</li>
  * </ul>
- * <p>YAML ファイルは {@code src/test/java/{package}/ClassName.yaml} に Excel と同ディレクトリで配置する。</p>
+ * <p>YAML ファイルは {@code src/test/java/{package}/ClassName.ntf.yaml}（または {@code .yaml}）に
+ * Excel と同ディレクトリで配置する。</p>
  */
 public class YamlReader implements TestDataReader {
-
-    private static final String YAML_EXTENSION = ".yaml";
 
     private List<List<String>> lines;
     private Iterator<List<String>> iterator;
@@ -115,15 +115,20 @@ public class YamlReader implements TestDataReader {
      * {@code resourceName}（ソースディレクトリ相対パス）と {@code dataName}
      * （{@code ClassName/sheetName}）から YAML ファイルを返す。
      *
+     * <p>{@code .ntf.yaml} を優先して探し、存在しない場合は {@code .yaml} を返す。</p>
+     *
      * <pre>
      * resourceName = "src/test/java/com/example"
      * dataName     = "FooTest/setUpDb"
-     * → new File("src/test/java/com/example/FooTest.yaml")
+     * → new File("src/test/java/com/example/FooTest.ntf.yaml")  // 存在すれば
+     * → new File("src/test/java/com/example/FooTest.yaml")      // なければこちら
      * </pre>
      */
     private File resolveYamlFile(String resourceName, String dataName) {
         String className = extractClassName(dataName);
-        return new File(resourceName + "/" + className + YAML_EXTENSION);
+        String base = resourceName + "/" + className;
+        File ntfYaml = new File(base + ".ntf.yaml");
+        return ntfYaml.exists() ? ntfYaml : new File(base + ".yaml");
     }
 
     /** {@code dataName} の '/' より前のクラス名部分を返す */
